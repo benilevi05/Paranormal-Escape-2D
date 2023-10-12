@@ -1,33 +1,56 @@
 import javax.swing.*;
 
 public class Movables extends JPanel implements MoveInterface {
-    int x = 0;
-    int y = 0;
+    int x;
+    int y;
     int energy;
     int moved;
 
     @Override
     public boolean moveRight() {
-        System.out.println("Moved");
-        x += 48;
+        x += Grid.TILE_SIZE;
         return false;
     }
 
     @Override
     public boolean moveLeft() {
-        x -= 48;
+        x -= Grid.TILE_SIZE;
+        return false;
+    }
+
+    @Override
+    public boolean moveUp() {
+        y -= Grid.TILE_SIZE;
+        return false;
+    }
+
+    @Override
+    public boolean moveDown() {
+        y += Grid.TILE_SIZE;
         return false;
     }
 
     @Override
     public boolean jumpRight() {
-        x += 96;
+        x += Grid.TILE_SIZE * 2;
         return false;
     }
 
     @Override
     public boolean jumpLeft() {
-        x -= 96;
+        x -= Grid.TILE_SIZE * 2;
+        return false;
+    }
+
+    @Override
+    public boolean jumpUp() {
+        y -= Grid.TILE_SIZE * 2;
+        return false;
+    }
+
+    @Override
+    public boolean jumpDown() {
+        y += Grid.TILE_SIZE * 2;
         return false;
     }
 }

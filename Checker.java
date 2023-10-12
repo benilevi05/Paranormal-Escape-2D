@@ -1,3 +1,3 @@
 public interface Checker {
-    public void check();
+    public boolean check(String s);
 }
