@@ -4,7 +4,8 @@ import java.awt.*;
 public class Game {
     public void run(){
         JFrame window = new JFrame("Paranormal Escape 2D");
-        Grid grid = new Grid();
+        Player player = new Player();
+        Grid grid = new Grid(player);
         window.add(grid);
 
         window.pack();
