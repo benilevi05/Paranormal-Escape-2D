@@ -6,6 +6,6 @@ public class Player extends Movables {
 
     public void draw(Graphics2D g2){
         g2.setColor(Color.BLACK);
-        g2.fillRect(100, 100, Grid.TILE_SIZE, Grid.TILE_SIZE);
+        g2.fillRect(x, y, Grid.TILE_SIZE, Grid.TILE_SIZE);
     }
 }
