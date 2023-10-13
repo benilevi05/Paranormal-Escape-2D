@@ -1,8 +1,8 @@
 public class BorderChecker implements Checker {
 
     @Override
-    public void check() {
-        
+    public boolean check(String s) {
+        return false;
     }
-    
+
 }

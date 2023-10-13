@@ -8,18 +8,18 @@ public class Grid extends JPanel {
     final static int ORIGINAL_TILE_SIZE = 16;
     final static int SCALE = 4;
 
-    public static final int TILE_SIZE = ORIGINAL_TILE_SIZE * SCALE; //48 x 48
-    public final int rowAmount = 12;
-    public final int columnAmount = 12;
-    final int rowSize = TILE_SIZE * rowAmount; 
-    final int columnSize = TILE_SIZE * columnAmount;
-    
+    public static final int TILE_SIZE = ORIGINAL_TILE_SIZE * SCALE; // 48 x 48
+    public static final int ROW_AMOUNT = 12;
+    public static final int COLUMN_AMOUNT = 12;
+    public static final int ROW_SIZE = TILE_SIZE * ROW_AMOUNT;
+    public static final int COLUMN_SIZE = TILE_SIZE * COLUMN_AMOUNT;
+
     Player player;
-    int[][] pos = new int[rowAmount][columnAmount];
+    int[][] pos = new int[ROW_AMOUNT][COLUMN_AMOUNT];
 
     public Grid(Player player) {
         this.player = player;
-        this.setPreferredSize(new Dimension(rowSize, columnSize));
+        this.setPreferredSize(new Dimension(ROW_SIZE, COLUMN_SIZE));
         this.setBackground(Color.PINK);
         this.setDoubleBuffered(true);
     }
@@ -28,29 +28,24 @@ public class Grid extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-        player.draw(g2);
-         try {
+        try {
             BufferedImage image = ImageIO.read(getClass().getResourceAsStream("Background.png"));
             g2.drawImage(image, 0, 0, null);
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         Color myColor = new Color(211, 211, 211, 60);
         g2.setColor(myColor);
 
-        for (int x = 6; x < rowSize; x = x + 64){
-            for (int y = 6; y < columnSize; y= y + 64){
+        for (int x = 6; x < ROW_SIZE; x = x + 64) {
+            for (int y = 6; y < COLUMN_SIZE; y = y + 64) {
                 g2.fillRect(x, y, 52, 52);
             }
-        } 
-
-       
-
-
+        }
+        g2.setColor(Color.PINK);
+        player.draw(g2);
         g2.dispose();
 
-    
     }
 
 }
