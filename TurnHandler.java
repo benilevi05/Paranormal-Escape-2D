@@ -4,7 +4,7 @@ import javax.swing.*;
 
 public class TurnHandler implements KeyListener {
 
-    public boolean pressed, pressedJump, pressedUp, pressedDown, pressedRight, pressedLeft;
+    public boolean pressedUp, pressedDown, pressedRight, pressedLeft;
     Player player;
     Grid grid;
     JFrame window;
@@ -28,10 +28,6 @@ public class TurnHandler implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
-        pressed = true;
-        if (code == KeyEvent.VK_SPACE) {
-            pressedJump = true;
-        }
         if (code == KeyEvent.VK_W) {
             pressedUp = true;
         }
@@ -55,10 +51,6 @@ public class TurnHandler implements KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {
         int code = e.getKeyCode();
-        pressed = false;
-        if (code == KeyEvent.VK_SPACE) {
-            pressedJump = false;
-        }
         if (code == KeyEvent.VK_W) {
             pressedUp = false;
         }

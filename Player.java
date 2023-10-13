@@ -11,6 +11,7 @@ public class Player extends Movables {
     public Player() {
         x = 8;
         y = 8;
+        energy = 5;
         getPlayerImage();
 
     }
