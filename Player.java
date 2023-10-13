@@ -1,15 +1,33 @@
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 public class Player extends Movables {
+    BufferedImage playerImage;
     public Player() {
-        x = 16;
-        y = 16;
+        x = 8;
+        y = 8;
+        energy = 5;
+        getPlayerImage();
+
+    }
+
+    public void getPlayerImage(){
+        try{
+
+            playerImage = ImageIO.read(getClass().getResourceAsStream("Player.PNG"));
+        } catch(IOException e){
+            e.printStackTrace();
+        }
     }
 
     public void draw(Graphics2D g2) {
-        g2.setColor(Color.PINK);
-        g2.fillRect(x, y, Grid.TILE_SIZE / 2, Grid.TILE_SIZE / 2);
+        long num = Math.round(Grid.TILE_SIZE * (3.0/4.0));
+        int num2 = (int)num;
+        g2.drawImage(playerImage, x, y, num2, num2, null);
     }
 }

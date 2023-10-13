@@ -4,7 +4,7 @@ import javax.swing.*;
 
 public class TurnHandler implements KeyListener {
 
-    public boolean pressed, pressedJump, pressedUp, pressedDown, pressedRight, pressedLeft;
+    public boolean pressedUp, pressedDown, pressedRight, pressedLeft, pressedJup, pressedJdown, pressedJright, pressedJleft;
     Player player;
     Grid grid;
     JFrame window;
@@ -28,21 +28,29 @@ public class TurnHandler implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
-        pressed = true;
-        if (code == KeyEvent.VK_SPACE) {
-            pressedJump = true;
-        }
         if (code == KeyEvent.VK_W) {
             pressedUp = true;
+        }
+        if (code == KeyEvent.VK_UP){
+            pressedJup = true;
         }
         if (code == KeyEvent.VK_S) {
             pressedDown = true;
         }
+        if (code == KeyEvent.VK_DOWN){
+            pressedJdown = true;
+        }
         if (code == KeyEvent.VK_D) {
             pressedRight = true;
         }
+        if (code == KeyEvent.VK_RIGHT){
+            pressedJright = true;
+        }
         if (code == KeyEvent.VK_A) {
             pressedLeft = true;
+        }
+        if (code == KeyEvent.VK_LEFT){
+            pressedJleft = true;
         }
         if (ah.timePassed) {
             timer.stop();
@@ -55,21 +63,29 @@ public class TurnHandler implements KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {
         int code = e.getKeyCode();
-        pressed = false;
-        if (code == KeyEvent.VK_SPACE) {
-            pressedJump = false;
-        }
         if (code == KeyEvent.VK_W) {
             pressedUp = false;
+        }
+        if (code == KeyEvent.VK_UP){
+            pressedJup = false;
         }
         if (code == KeyEvent.VK_S) {
             pressedDown = false;
         }
+        if (code == KeyEvent.VK_DOWN){
+            pressedJdown = false;
+        }
         if (code == KeyEvent.VK_D) {
             pressedRight = false;
         }
+        if (code == KeyEvent.VK_RIGHT){
+            pressedJright = false;
+        }
         if (code == KeyEvent.VK_A) {
             pressedLeft = false;
+        }
+        if (code == KeyEvent.VK_LEFT){
+            pressedJleft = false;
         }
     }
 
@@ -101,6 +117,38 @@ public class TurnHandler implements KeyListener {
         if (pressedDown) {
             if (!(player.y + Grid.TILE_SIZE > Grid.ROW_SIZE)) {
                 player.moveDown();
+                playerTurnOver();
+            } else {
+                playerNotMoved();
+            }
+        }
+        if (pressedJup){
+            if (!(player.y - (2*Grid.TILE_SIZE) < 0) && !(player.energy < 1)) {
+                player.jumpUp();
+                playerTurnOver();
+            } else {
+                playerNotMoved();
+            }
+        }
+        if (pressedJdown){
+            if (!(player.y + 2*Grid.TILE_SIZE > Grid.ROW_SIZE) && !(player.energy < 1)) {
+                player.jumpDown();
+                playerTurnOver();
+            } else {
+                playerNotMoved();
+            }
+        }
+        if (pressedJright) {
+            if (!(player.x + 2*Grid.TILE_SIZE > Grid.ROW_SIZE) && !(player.energy < 1)) {
+                player.jumpRight();
+                playerTurnOver();
+            } else {
+                playerNotMoved();
+            }
+        }
+        if (pressedJleft) {
+            if (!(player.x -2*Grid.TILE_SIZE < 0) && !(player.energy < 1)) {
+                player.jumpLeft();
                 playerTurnOver();
             } else {
                 playerNotMoved();

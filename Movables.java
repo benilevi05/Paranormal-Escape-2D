@@ -33,24 +33,28 @@ public class Movables extends JPanel implements MoveInterface {
     @Override
     public boolean jumpRight() {
         x += Grid.TILE_SIZE * 2;
+        energy -= 1;
         return false;
     }
 
     @Override
     public boolean jumpLeft() {
         x -= Grid.TILE_SIZE * 2;
+        energy -= 1;
         return false;
     }
 
     @Override
     public boolean jumpUp() {
         y -= Grid.TILE_SIZE * 2;
+        energy -= 1;
         return false;
     }
 
     @Override
     public boolean jumpDown() {
         y += Grid.TILE_SIZE * 2;
+        energy -= 1;
         return false;
     }
 }
