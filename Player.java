@@ -3,31 +3,36 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
 
 public class Player extends Movables {
     BufferedImage playerImage;
+    Random random = new Random();
     public Player() {
-        x = 8;
-        y = 8;
+        int ranx = random.nextInt(2);
+        int rany = random.nextInt(2);
+        //Random spawn in a 2x2 area.
+        x = (Grid.ROW_SIZE / 2) - (Grid.TILE_SIZE * ranx) + 8; 
+        y = (Grid.COLUMN_SIZE / 2) - (Grid.TILE_SIZE  * rany) + 8;
+
+
         energy = 5;
         getPlayerImage();
-
     }
 
     public void getPlayerImage(){
-        try{
-
+        try {
             playerImage = ImageIO.read(getClass().getResourceAsStream("Player.PNG"));
-        } catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public void draw(Graphics2D g2) {
-        long num = Math.round(Grid.TILE_SIZE * (3.0/4.0));
-        int num2 = (int)num;
+        long num = Math.round(Grid.TILE_SIZE * (3.0 / 4.0));
+        int num2 = (int) num;
         g2.drawImage(playerImage, x, y, num2, num2, null);
     }
 }

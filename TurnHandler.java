@@ -4,7 +4,8 @@ import javax.swing.*;
 
 public class TurnHandler implements KeyListener {
 
-    public boolean pressedUp, pressedDown, pressedRight, pressedLeft, pressedJup, pressedJdown, pressedJright, pressedJleft;
+    public boolean pressedUp, pressedDown, pressedRight, pressedLeft, pressedJup, pressedJdown, pressedJright,
+            pressedJleft;
     Player player;
     Grid grid;
     JFrame window;
@@ -31,25 +32,25 @@ public class TurnHandler implements KeyListener {
         if (code == KeyEvent.VK_W) {
             pressedUp = true;
         }
-        if (code == KeyEvent.VK_UP){
+        if (code == KeyEvent.VK_UP) {
             pressedJup = true;
         }
         if (code == KeyEvent.VK_S) {
             pressedDown = true;
         }
-        if (code == KeyEvent.VK_DOWN){
+        if (code == KeyEvent.VK_DOWN) {
             pressedJdown = true;
         }
         if (code == KeyEvent.VK_D) {
             pressedRight = true;
         }
-        if (code == KeyEvent.VK_RIGHT){
+        if (code == KeyEvent.VK_RIGHT) {
             pressedJright = true;
         }
         if (code == KeyEvent.VK_A) {
             pressedLeft = true;
         }
-        if (code == KeyEvent.VK_LEFT){
+        if (code == KeyEvent.VK_LEFT) {
             pressedJleft = true;
         }
         if (ah.timePassed) {
@@ -66,25 +67,25 @@ public class TurnHandler implements KeyListener {
         if (code == KeyEvent.VK_W) {
             pressedUp = false;
         }
-        if (code == KeyEvent.VK_UP){
+        if (code == KeyEvent.VK_UP) {
             pressedJup = false;
         }
         if (code == KeyEvent.VK_S) {
             pressedDown = false;
         }
-        if (code == KeyEvent.VK_DOWN){
+        if (code == KeyEvent.VK_DOWN) {
             pressedJdown = false;
         }
         if (code == KeyEvent.VK_D) {
             pressedRight = false;
         }
-        if (code == KeyEvent.VK_RIGHT){
+        if (code == KeyEvent.VK_RIGHT) {
             pressedJright = false;
         }
         if (code == KeyEvent.VK_A) {
             pressedLeft = false;
         }
-        if (code == KeyEvent.VK_LEFT){
+        if (code == KeyEvent.VK_LEFT) {
             pressedJleft = false;
         }
     }
@@ -122,16 +123,16 @@ public class TurnHandler implements KeyListener {
                 playerNotMoved();
             }
         }
-        if (pressedJup){
-            if (!(player.y - (2*Grid.TILE_SIZE) < 0) && !(player.energy < 1)) {
+        if (pressedJup) {
+            if (!(player.y - (2 * Grid.TILE_SIZE) < 0) && !(player.energy < 1)) {
                 player.jumpUp();
                 playerTurnOver();
             } else {
                 playerNotMoved();
             }
         }
-        if (pressedJdown){
-            if (!(player.y + 2*Grid.TILE_SIZE > Grid.ROW_SIZE) && !(player.energy < 1)) {
+        if (pressedJdown) {
+            if (!(player.y + 2 * Grid.TILE_SIZE > Grid.ROW_SIZE) && !(player.energy < 1)) {
                 player.jumpDown();
                 playerTurnOver();
             } else {
@@ -139,7 +140,7 @@ public class TurnHandler implements KeyListener {
             }
         }
         if (pressedJright) {
-            if (!(player.x + 2*Grid.TILE_SIZE > Grid.ROW_SIZE) && !(player.energy < 1)) {
+            if (!(player.x + 2 * Grid.TILE_SIZE > Grid.ROW_SIZE) && !(player.energy < 1)) {
                 player.jumpRight();
                 playerTurnOver();
             } else {
@@ -147,7 +148,7 @@ public class TurnHandler implements KeyListener {
             }
         }
         if (pressedJleft) {
-            if (!(player.x -2*Grid.TILE_SIZE < 0) && !(player.energy < 1)) {
+            if (!(player.x - 2 * Grid.TILE_SIZE < 0) && !(player.energy < 1)) {
                 player.jumpLeft();
                 playerTurnOver();
             } else {
@@ -160,6 +161,8 @@ public class TurnHandler implements KeyListener {
     private void playerNotMoved() {
         // Play a error sound
         System.out.println("cant move");
+        ah.timePassed = false;
+        timer.restart();
     }
 
     private void playerTurnOver() {
