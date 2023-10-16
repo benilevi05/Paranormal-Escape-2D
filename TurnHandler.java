@@ -9,16 +9,20 @@ public class TurnHandler implements KeyListener {
     Player player;
     Grid grid;
     JFrame window;
+    Ghost[] ghosts;
     Timer timer;
     ActionHandler ah;
+    CollisionDedector collisionDedector;
 
-    public TurnHandler(Player player, Grid grid, JFrame window) {
+    public TurnHandler(Player player, Grid grid, JFrame window, Ghost[] ghosts) {
         this.player = player;
         this.grid = grid;
         this.window = window;
+        this.ghosts = ghosts;
         window.addKeyListener(this);
         ah = new ActionHandler();
         timer = new Timer(1000, ah);
+        collisionDedector = new CollisionDedector();
     }
 
     @Override
@@ -166,12 +170,25 @@ public class TurnHandler implements KeyListener {
     }
 
     private void playerTurnOver() {
-        ah.timePassed = false;
-        enemyTurn();
-        timer.restart();
+        if (collisionDedector.detectCollision(player, ghosts)) {
+            System.exit(0); //to be replaced with game over screen
+        } else {
+            ah.timePassed = false;
+            timer.restart();
+            enemyTurn();
+        }
+        
     }
 
     private void enemyTurn() {
 
+        
+        enemyTurnOver();
+    }
+
+    private void enemyTurnOver() {
+        if (collisionDedector.detectCollision(player, ghosts)) {
+            System.exit(0); //to be replaced with game over screen
+        }
     }
 }

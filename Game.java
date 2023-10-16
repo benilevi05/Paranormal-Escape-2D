@@ -2,15 +2,22 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Game {
+    public static final int GHOST_AMOUNT = 2;
     public Player player;
-    public Ghost ghost;
+    public Ghost[] ghosts;
     public Grid grid;
     public Thread gameThread;
 
     void start() {
         JFrame window = new JFrame("Paranormal Escape 2D");
+
         player = new Player();
-        ghost = new Ghost();
+        ghosts = new Ghost[GHOST_AMOUNT];
+        for (int i = 0; i < GHOST_AMOUNT; i++) {
+            Ghost ghost = new Ghost();
+            ghosts[i] = ghost;
+        }
+
         grid = new Grid(player);
         window.add(grid);
         window.pack();
@@ -19,7 +26,7 @@ public class Game {
         window.setVisible(true);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         startGameThread();
-        new TurnHandler(player, grid, window);
+        new TurnHandler(player, grid, window, ghosts);
     }
 
     void startGameThread() {
