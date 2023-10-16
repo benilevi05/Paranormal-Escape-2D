@@ -1,5 +1,7 @@
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.security.cert.TrustAnchor;
+import java.util.ArrayList;
 import javax.swing.*;
 
 public class TurnHandler implements KeyListener {
@@ -13,16 +15,21 @@ public class TurnHandler implements KeyListener {
     Timer timer;
     ActionHandler ah;
     CollisionDedector collisionDedector;
+    int TurnCount = 0;
+    ArrayList<EnergyCell> CellArray;
+    EnergyCellGenerator Generator;
 
     public TurnHandler(Player player, Grid grid, JFrame window, Ghost[] ghosts) {
         this.player = player;
         this.grid = grid;
         this.window = window;
         this.ghosts = ghosts;
+        CellArray = new ArrayList<EnergyCell>();
         window.addKeyListener(this);
         ah = new ActionHandler();
         timer = new Timer(1000, ah);
         collisionDedector = new CollisionDedector();
+        Generator = new EnergyCellGenerator();
     }
 
     @Override
@@ -170,15 +177,21 @@ public class TurnHandler implements KeyListener {
     }
 
     private void playerTurnOver() {
-        if (collisionDedector.detectCollision(player, ghosts)) {
+        if (collisionDedector.detectGhostCollision(player, ghosts)) {
             System.exit(0); //to be replaced with game over screen
         } else {
             ah.timePassed = false;
             timer.restart();
+            if (collisionDedector.detectPlayerEnergyCollision(player, CellArray)){
+                System.out.println("True");
+                player.energy += 2;
+            }
             enemyTurn();
+
         }
-        
     }
+
+
 
     private void enemyTurn() {
 
@@ -187,8 +200,24 @@ public class TurnHandler implements KeyListener {
     }
 
     private void enemyTurnOver() {
-        if (collisionDedector.detectCollision(player, ghosts)) {
+        if (collisionDedector.detectGhostCollision(player, ghosts)) {
             System.exit(0); //to be replaced with game over screen
         }
+        TurnCount += 1;
+        System.out.println(TurnCount);
+        CellTurn();
+
+
     }
-}
+    private void CellTurn(){
+        if (TurnCount > 3){
+            EnergyCell cell;
+            cell = Generator.Generate();
+         if (cell != null){
+            CellArray.add(cell);
+
+        }}
+        
+        grid.cellArray = CellArray;
+    }
+}   
