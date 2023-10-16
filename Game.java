@@ -1,16 +1,16 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
 public class Game {
     public Player player;
+    public Ghost ghost;
     public Grid grid;
     public Thread gameThread;
 
-    public void start() {
+    void start() {
         JFrame window = new JFrame("Paranormal Escape 2D");
         player = new Player();
+        ghost = new Ghost();
         grid = new Grid(player);
         window.add(grid);
         window.pack();
@@ -18,11 +18,11 @@ public class Game {
         window.setLocationRelativeTo(null);
         window.setVisible(true);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        new TurnHandler(player, grid, window);
         startGameThread();
+        new TurnHandler(player, grid, window);
     }
 
-    public void startGameThread() {
+    void startGameThread() {
         gameThread = new Thread();
         gameThread.start();
     }
