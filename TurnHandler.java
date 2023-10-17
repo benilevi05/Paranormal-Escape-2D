@@ -185,6 +185,7 @@ public class TurnHandler implements KeyListener {
             if (collisionDedector.detectPlayerEnergyCollision(player, CellArray)){
                 System.out.println("True");
                 player.energy += 2;
+                System.out.println(player.energy);
             }
             enemyTurn();
 
@@ -204,7 +205,7 @@ public class TurnHandler implements KeyListener {
             System.exit(0); //to be replaced with game over screen
         }
         TurnCount += 1;
-        System.out.println(TurnCount);
+
         CellTurn();
 
 
