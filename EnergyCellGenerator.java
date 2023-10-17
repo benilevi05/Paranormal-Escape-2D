@@ -3,8 +3,7 @@ import java.util.Random;
 public class EnergyCellGenerator {
     EnergyCell Generate(){
         Random random = new Random();
-        int cellProb = random.nextInt(4);
-        if (cellProb != 0){
+        if (random.nextInt(3) == 0) {
             return null;
         } else{
 

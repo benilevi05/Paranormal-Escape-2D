@@ -21,5 +21,104 @@ public class Ghost extends Movables {
             spawn();
         }
     }
+
+    public void ghostAI(Player player, EnergyCell cell){
+        String moveToX;
+        String moveToY;
+        //x movement
+        if (player.x == this.x) { //if the player and ghost is in the same x, it doesnt get a chance to move towards X.
+            moveToX = "0";
+        } else if (player.x > this.x) {
+            moveToX = "+";
+        } else {
+            moveToX = "-";
+        }  
+        
+        if (energy == 0 && !(Math.abs(player.x - this.x) < 2)) {
+            if (cell.x - this.x < 3 * Grid.TILE_SIZE) {
+                moveToX = "+";
+            } else if (this.x - cell.x < 3 * Grid.TILE_SIZE) {
+                moveToX= "-";
+            }
+        }
+
+        if (player.y == this.y) { //if the player and ghost is in the same y, it doesnt get a chance to move towards Y.
+            moveToY = "0";
+        } else if (player.y > this.y) {
+            moveToY = "+";
+        } else {
+            moveToY = "-";
+        }
+
+        if (energy == 0 && !(Math.abs(player.y - this.y) < 2)) {
+            if (cell.y - this.y < 3 * Grid.TILE_SIZE) {
+                moveToY = "+";
+            } else if (this.y - cell.y < 3 * Grid.TILE_SIZE) {
+                moveToY= "-";
+            }
+        }
+        
+        
+
+        if (!(moveToX.equals("0")) && !(moveToY.equals("0"))) { //if both x and y are different, pick random.
+            if (random.nextInt(2) == 0) {
+                ghostAIMoveTowardsX(moveToX);
+            } else {
+                ghostAIMoveTowardsY(moveToY);
+            }
+        } else if (moveToX.equals("0")) { //if x's are same, go to y.
+            ghostAIMoveTowardsY(moveToY);
+        } else if (moveToY.equals("0")) { //if y's are same, go to x.
+            ghostAIMoveTowardsX(moveToX); 
+        } 
+
+    }
+
+    void ghostAIMoveTowardsX(String moveToX){
+        if (energy > 0) {
+            if (moveToX.equals("+")) {
+                if (random.nextInt(energy + 1) == 0) {
+                    moveRight();
+                } else {
+                    jumpRight();
+                }
+            } else {
+                if (random.nextInt(energy + 1) == 0) {
+                    moveLeft();
+                } else {
+                    jumpLeft();
+                }
+            }
+        } else { //if energy = 0
+            if (moveToX.equals("+")) {
+                moveRight();
+            } else {
+                moveLeft();
+            }
+        }
+    }
     
+    void ghostAIMoveTowardsY(String moveToY){
+        if (energy > 0) {
+            if (moveToY.equals("+")) {
+                if (random.nextInt(energy) == 0) {
+                    moveDown();
+                } else {
+                    jumpDown();
+                }
+            } else {
+                if (random.nextInt(energy) == 0) {
+                    moveUp();
+                } else {
+                    jumpUp();
+                }
+            }
+        } else {
+            if (moveToY.equals("+")) {
+                moveDown();
+            } else {
+                moveUp();
+            }
+        }
+    }
 }
