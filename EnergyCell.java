@@ -21,7 +21,7 @@ public class EnergyCell extends JPanel{
 
     public void getCellImage(){
         try {
-            cellImage = ImageIO.read(getClass().getResourceAsStream("Player.PNG"));
+            cellImage = ImageIO.read(getClass().getResourceAsStream("Cell.PNG"));
         } catch (IOException e) {
             e.printStackTrace();
         }
