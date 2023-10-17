@@ -1,11 +1,19 @@
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.Random;
+
+import javax.imageio.ImageIO;
 
 public class Ghost extends Movables {
 
     Random random = new Random();
+    BufferedImage ghostImage;
 
     public Ghost() {
         spawn();
+
+        getGhostImage();
     }   
 
     void spawn() {
@@ -159,5 +167,19 @@ public class Ghost extends Movables {
                 moveUp();
             }
         }
+    }
+
+    public void getGhostImage(){
+        try {
+            ghostImage = ImageIO.read(getClass().getResourceAsStream("Player.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void draw(Graphics2D g2) {
+        long num = Math.round(Grid.TILE_SIZE * (3.0 / 4.0));
+        int num2 = (int) num;
+        g2.drawImage(ghostImage, x - 24, y - 24, num2, num2, null);
     }
 }

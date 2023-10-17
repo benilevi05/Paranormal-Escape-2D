@@ -183,7 +183,6 @@ public class TurnHandler implements KeyListener {
             ah.timePassed = false;
             timer.restart();
             if (collisionDedector.detectEnergyCollision(player, CellArray)){
-                System.out.println("True");
                 player.energy += 2;
                 System.out.println(player.energy);
             }
@@ -223,6 +222,10 @@ public class TurnHandler implements KeyListener {
         TurnCount += 1;
         for (Ghost ghost:ghosts){
             System.out.println((ghost.x-32)/64+","+(ghost.y-32)/64);
+            if (collisionDedector.detectEnergyCollision(ghost, CellArray)) {
+                ghost.energy += 2;
+                System.out.println("Ghost Energy: " + ghost.energy);
+            }
         }
         CellTurn();
 

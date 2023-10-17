@@ -16,11 +16,13 @@ public class Grid extends JPanel {
     public static final int COLUMN_SIZE = TILE_SIZE * COLUMN_AMOUNT;
 
     Player player;
+    Ghost[] ghosts;
     public ArrayList<EnergyCell> cellArray;
     int[][] pos = new int[ROW_AMOUNT][COLUMN_AMOUNT];
 
-    public Grid(Player player) {
+    public Grid(Player player, Ghost[] ghosts) {
         this.player = player;
+        this.ghosts = ghosts;
         this.setPreferredSize(new Dimension(ROW_SIZE, COLUMN_SIZE));
         this.setBackground(Color.PINK);
         this.setDoubleBuffered(true);
@@ -51,6 +53,9 @@ public class Grid extends JPanel {
                 EnergyCell cell = cellArray.get(i);
                 cell.draw(g2);
             }
+        }
+        for (Ghost ghost: ghosts) {
+            ghost.draw(g2);
         }
             
         g2.dispose();

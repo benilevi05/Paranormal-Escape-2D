@@ -17,7 +17,7 @@ public class Game {
             Ghost ghost = new Ghost();
             ghosts[i] = ghost;
         }
-        grid = new Grid(player);
+        grid = new Grid(player, ghosts);
         window.add(grid);
         window.pack();
         window.setResizable(false);
