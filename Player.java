@@ -24,7 +24,7 @@ public class Player extends Movables {
 
     public void getPlayerImage(){
         try {
-            playerImage = ImageIO.read(getClass().getResourceAsStream("Player.PNG"));
+            playerImage = ImageIO.read(getClass().getResourceAsStream("Player.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }

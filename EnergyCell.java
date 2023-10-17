@@ -16,12 +16,14 @@ public class EnergyCell extends JPanel{
     }
 
     public void destroy(){
-        
+        this.x = 0;
+        this.y = 0;
+        this.setVisible(false);
     }
 
     public void getCellImage(){
         try {
-            cellImage = ImageIO.read(getClass().getResourceAsStream("Cell.PNG"));
+            cellImage = ImageIO.read(getClass().getResourceAsStream("Cell.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
