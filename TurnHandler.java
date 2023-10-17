@@ -182,7 +182,7 @@ public class TurnHandler implements KeyListener {
         } else {
             ah.timePassed = false;
             timer.restart();
-            if (collisionDedector.detectPlayerEnergyCollision(player, CellArray)){
+            if (collisionDedector.detectEnergyCollision(player, CellArray)){
                 System.out.println("True");
                 player.energy += 2;
                 System.out.println(player.energy);
@@ -194,9 +194,9 @@ public class TurnHandler implements KeyListener {
 
 
 
-    private void enemyTurn() {
-
+    private void enemyTurn() { 
         
+
         enemyTurnOver();
     }
 

@@ -10,11 +10,11 @@ public class CollisionDedector {
         }
         return false;
     }
-    public boolean detectPlayerEnergyCollision(Player player, ArrayList<EnergyCell> CellArray){
+    public boolean detectEnergyCollision(Movables movable, ArrayList<EnergyCell> CellArray){
         if (CellArray != null){
             for (int i = 0; i < CellArray.size(); i++){
                 EnergyCell cell = CellArray.get(i);
-                if (player.x == cell.x && player.y == cell.y){
+                if (movable.x == cell.x && movable.y == cell.y){
                     CellArray.remove(i);
                     return true;
                 }
