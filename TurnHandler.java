@@ -194,18 +194,36 @@ public class TurnHandler implements KeyListener {
 
 
 
-    private void enemyTurn() { 
-        
+    private void enemyTurn() {
+        for (Ghost ghost:ghosts){
+            EnergyCell closestCell = null;
+            int closest = Grid.ROW_SIZE + Grid.COLUMN_SIZE;
+            try{
+            for (int j=0; j < CellArray.size(); j++){
+                EnergyCell cell = CellArray.get(j);
+                if (Math.abs((ghost.x-cell.x) + Math.abs((ghost.y-cell.y))) < closest){
+                    closest = Math.abs(ghost.x-cell.x) + Math.abs((ghost.y-cell.y));
+                    closestCell = cell;
+                }
+            }
+            ghost.ghostAI(player, closestCell);
+        } catch(Exception e){
+            ghost.ghostAI(player);
+        }
+        }
 
-        enemyTurnOver();
-    }
-
+    enemyTurnOver(); 
+}
+    
     private void enemyTurnOver() {
         if (collisionDedector.detectGhostCollision(player, ghosts)) {
+
             System.exit(0); //to be replaced with game over screen
         }
         TurnCount += 1;
-
+        for (Ghost ghost:ghosts){
+            System.out.println((ghost.x-32)/64+","+(ghost.y-32)/64);
+        }
         CellTurn();
 
 

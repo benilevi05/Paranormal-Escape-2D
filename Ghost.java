@@ -74,6 +74,45 @@ public class Ghost extends Movables {
 
     }
 
+    public void ghostAI(Player player){
+        String moveToX;
+        String moveToY;
+        //x movement
+        if (player.x == this.x) { //if the player and ghost is in the same x, it doesnt get a chance to move towards X.
+            moveToX = "0";
+        } else if (player.x > this.x) {
+            moveToX = "+";
+        } else {
+            moveToX = "-";
+        }  
+        
+        if (player.y == this.y) { //if the player and ghost is in the same y, it doesnt get a chance to move towards Y.
+            moveToY = "0";
+        } else if (player.y > this.y) {
+            moveToY = "+";
+        } else {
+            moveToY = "-";
+        }
+
+
+        
+        
+
+        if (!(moveToX.equals("0")) && !(moveToY.equals("0"))) { //if both x and y are different, pick random.
+            if (random.nextInt(2) == 0) {
+                ghostAIMoveTowardsX(moveToX);
+            } else {
+                ghostAIMoveTowardsY(moveToY);
+            }
+        } else if (moveToX.equals("0")) { //if x's are same, go to y.
+            ghostAIMoveTowardsY(moveToY);
+        } else if (moveToY.equals("0")) { //if y's are same, go to x.
+            ghostAIMoveTowardsX(moveToX); 
+        } 
+
+    }
+
+
     void ghostAIMoveTowardsX(String moveToX){
         if (energy > 0) {
             if (moveToX.equals("+")) {
