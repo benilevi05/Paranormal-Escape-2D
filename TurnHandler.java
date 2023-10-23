@@ -1,5 +1,7 @@
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.security.cert.TrustAnchor;
+import java.util.ArrayList;
 import javax.swing.*;
 
 public class TurnHandler implements KeyListener {
@@ -9,16 +11,25 @@ public class TurnHandler implements KeyListener {
     Player player;
     Grid grid;
     JFrame window;
+    Ghost[] ghosts;
     Timer timer;
     ActionHandler ah;
+    CollisionDedector collisionDedector;
+    int TurnCount = 0;
+    ArrayList<EnergyCell> CellArray;
+    EnergyCellGenerator Generator;
 
-    public TurnHandler(Player player, Grid grid, JFrame window) {
+    public TurnHandler(Player player, Grid grid, JFrame window, Ghost[] ghosts) {
         this.player = player;
         this.grid = grid;
         this.window = window;
+        this.ghosts = ghosts;
+        CellArray = new ArrayList<EnergyCell>();
         window.addKeyListener(this);
         ah = new ActionHandler();
         timer = new Timer(1000, ah);
+        collisionDedector = new CollisionDedector();
+        Generator = new EnergyCellGenerator();
     }
 
     @Override
@@ -166,12 +177,69 @@ public class TurnHandler implements KeyListener {
     }
 
     private void playerTurnOver() {
-        ah.timePassed = false;
-        enemyTurn();
-        timer.restart();
+        if (collisionDedector.detectGhostCollision(player, ghosts)) {
+            System.exit(0); //to be replaced with game over screen
+        } else {
+            ah.timePassed = false;
+            timer.restart();
+            if (collisionDedector.detectEnergyCollision(player, CellArray)){
+                player.energy += 2;
+                System.out.println(player.energy);
+            }
+            enemyTurn();
+
+        }
     }
+
+
 
     private void enemyTurn() {
+        for (Ghost ghost:ghosts){
+            EnergyCell closestCell = null;
+            int closest = Grid.ROW_SIZE + Grid.COLUMN_SIZE;
+            try{
+            for (int j=0; j < CellArray.size(); j++){
+                EnergyCell cell = CellArray.get(j);
+                if (Math.abs((ghost.x-cell.x) + Math.abs((ghost.y-cell.y))) < closest){
+                    closest = Math.abs(ghost.x-cell.x) + Math.abs((ghost.y-cell.y));
+                    closestCell = cell;
+                }
+            }
+            ghost.ghostAI(player, closestCell);
+        } catch(Exception e){
+            ghost.ghostAI(player);
+        }
+        }
+
+    enemyTurnOver(); 
+}
+    
+    private void enemyTurnOver() {
+        if (collisionDedector.detectGhostCollision(player, ghosts)) {
+
+            System.exit(0); //to be replaced with game over screen
+        }
+        TurnCount += 1;
+        for (Ghost ghost:ghosts){
+            System.out.println((ghost.x-32)/64+","+(ghost.y-32)/64);
+            if (collisionDedector.detectEnergyCollision(ghost, CellArray)) {
+                ghost.energy += 2;
+                System.out.println("Ghost Energy: " + ghost.energy);
+            }
+        }
+        CellTurn();
+
 
     }
-}
+    private void CellTurn(){
+        if (TurnCount > 3){
+            EnergyCell cell;
+            cell = Generator.Generate();
+         if (cell != null){
+            CellArray.add(cell);
+
+        }}
+        
+        grid.cellArray = CellArray;
+    }
+}   

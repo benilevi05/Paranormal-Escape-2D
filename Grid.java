@@ -3,6 +3,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Grid extends JPanel {
     final static int ORIGINAL_TILE_SIZE = 16;
@@ -15,10 +16,13 @@ public class Grid extends JPanel {
     public static final int COLUMN_SIZE = TILE_SIZE * COLUMN_AMOUNT;
 
     Player player;
+    Ghost[] ghosts;
+    public ArrayList<EnergyCell> cellArray;
     int[][] pos = new int[ROW_AMOUNT][COLUMN_AMOUNT];
 
-    public Grid(Player player) {
+    public Grid(Player player, Ghost[] ghosts) {
         this.player = player;
+        this.ghosts = ghosts;
         this.setPreferredSize(new Dimension(ROW_SIZE, COLUMN_SIZE));
         this.setBackground(Color.PINK);
         this.setDoubleBuffered(true);
@@ -44,7 +48,21 @@ public class Grid extends JPanel {
         }
         g2.setColor(Color.PINK);
         player.draw(g2);
+        if (cellArray != null) {
+            for (int i = 0; i < cellArray.size(); i++){
+                EnergyCell cell = cellArray.get(i);
+                cell.draw(g2);
+            }
+        }
+        for (Ghost ghost: ghosts) {
+            ghost.draw(g2);
+        }
+            
         g2.dispose();
+
+        
+
+
 
     }
 
