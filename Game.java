@@ -6,6 +6,7 @@ public class Game {
     public Player player;
     public Ghost[] ghosts;
     public Grid grid;
+    public DisplayPanel display;
     public Thread gameThread;
 
     void start() {
@@ -18,14 +19,16 @@ public class Game {
             ghosts[i] = ghost;
         }
         grid = new Grid(player, ghosts);
+        display = new DisplayPanel();
         window.add(grid);
+        window.add(display, BorderLayout.EAST);
         window.pack();
         window.setResizable(false);
         window.setLocationRelativeTo(null);
         window.setVisible(true);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         startGameThread();
-        new TurnHandler(player, grid, window, ghosts);
+        new TurnHandler(player, grid, window, ghosts, display);
     }
 
     void startGameThread() {

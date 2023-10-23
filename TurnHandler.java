@@ -10,6 +10,7 @@ public class TurnHandler implements KeyListener {
             pressedJleft;
     Player player;
     Grid grid;
+    DisplayPanel display;
     JFrame window;
     Ghost[] ghosts;
     Timer timer;
@@ -19,9 +20,10 @@ public class TurnHandler implements KeyListener {
     ArrayList<EnergyCell> CellArray;
     EnergyCellGenerator Generator;
 
-    public TurnHandler(Player player, Grid grid, JFrame window, Ghost[] ghosts) {
+    public TurnHandler(Player player, Grid grid, JFrame window, Ghost[] ghosts, DisplayPanel display) {
         this.player = player;
         this.grid = grid;
+        this.display = display;
         this.window = window;
         this.ghosts = ghosts;
         CellArray = new ArrayList<EnergyCell>();
@@ -227,6 +229,8 @@ public class TurnHandler implements KeyListener {
                 System.out.println("Ghost Energy: " + ghost.energy);
             }
         }
+        display.calculateDisplay(player, ghosts);
+        display.validate();
         CellTurn();
 
 
