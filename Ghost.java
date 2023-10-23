@@ -17,6 +17,7 @@ public class Ghost extends Movables {
     }   
 
     void spawn() {
+        energy = 3;
         int rowPos = random.nextInt(Grid.ROW_AMOUNT);
         int colPos = random.nextInt(Grid.COLUMN_AMOUNT);
 
@@ -42,11 +43,11 @@ public class Ghost extends Movables {
             moveToX = "-";
         }  
         
-        if (energy == 0 && !(Math.abs(player.x - this.x) < 2)) {
-            if (cell.x - this.x < 3 * Grid.TILE_SIZE) {
+        if (energy == 0 && !(Math.abs(player.x - this.x) < Grid.TILE_SIZE * 2)) {
+            if ( Math.abs(cell.x - this.x) < 3 * Grid.TILE_SIZE  && cell.x > this.x) {
                 moveToX = "+";
-            } else if (this.x - cell.x < 3 * Grid.TILE_SIZE) {
-                moveToX= "-";
+            } else if (Math.abs(cell.x - this.x) < 3 * Grid.TILE_SIZE  && cell.x < this.x) {
+                moveToX = "-";
             }
         }
 
@@ -58,11 +59,11 @@ public class Ghost extends Movables {
             moveToY = "-";
         }
 
-        if (energy == 0 && !(Math.abs(player.y - this.y) < 2)) {
-            if (cell.y - this.y < 3 * Grid.TILE_SIZE) {
+        if (energy == 0 && !(Math.abs(player.y - this.y) < Grid.TILE_SIZE * 2)) {
+            if (Math.abs(cell.y - this.y) < 3 * Grid.TILE_SIZE  && cell.y > this.y) {
                 moveToY = "+";
-            } else if (this.y - cell.y < 3 * Grid.TILE_SIZE) {
-                moveToY= "-";
+            } else if (Math.abs(cell.y - this.y) < 3 * Grid.TILE_SIZE  && cell.y > this.y) {
+                moveToY = "-";
             }
         }
         
