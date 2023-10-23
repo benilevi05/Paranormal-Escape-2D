@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 
+
 public class Game {
     public static final int GHOST_AMOUNT = 2;
     public Player player;
@@ -23,6 +24,8 @@ public class Game {
         window.add(grid);
         window.add(display, BorderLayout.EAST);
         window.pack();
+        MusicPlayer musicPlayer = new MusicPlayer();
+        musicPlayer.playMusic();
         window.setResizable(false);
         window.setLocationRelativeTo(null);
         window.setVisible(true);
