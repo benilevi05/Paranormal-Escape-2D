@@ -18,7 +18,7 @@ public class Game {
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         startGameThread();
         StateHandler sh = new StateHandler(window);
-        sh.createMenu();
+        sh.createMenu()
     }
 
     

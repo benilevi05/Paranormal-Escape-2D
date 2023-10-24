@@ -11,6 +11,7 @@ public class DisplayPanel extends JPanel {
     JLabel enemyDistance2;
 
     DisplayPanel(int highScore){
+
         this.setPreferredSize(new Dimension(Grid.TILE_SIZE * 2, Grid.COLUMN_SIZE));
         this.setBackground(Color.BLACK);
 
@@ -20,6 +21,7 @@ public class DisplayPanel extends JPanel {
         enemyDistance1 = new JLabel("Distance: ");
         JLabel enemyName2 = new JLabel("Jinn");
         enemyDistance2 = new JLabel("Distance: ");
+
         JLabel highScoreLabel = new JLabel("High Score: " + highScore);
 
         playerName.setForeground(Color.WHITE);
@@ -28,7 +30,9 @@ public class DisplayPanel extends JPanel {
         enemyDistance1.setForeground(Color.WHITE);
         enemyName2.setForeground(Color.WHITE);
         enemyDistance2.setForeground(Color.WHITE);
+      
         highScoreLabel.setForeground(Color.WHITE);
+
 
         this.add(playerName);
         this.add(playerEnergy);
