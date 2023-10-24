@@ -23,14 +23,16 @@ public class TurnHandler implements KeyListener {
     ArrayList<EnergyCell> CellArray;
     EnergyCellGenerator Generator;
     ScoreHandler sh;
+    StateHandler stateHandler;
 
-    public TurnHandler(Player player, Grid grid, JFrame window, Ghost[] ghosts, DisplayPanel display, ScoreHandler sh) {
+    public TurnHandler(Player player, Grid grid, JFrame window, Ghost[] ghosts, DisplayPanel display, ScoreHandler sh, StateHandler stateHandler) {
         this.player = player;
         this.grid = grid;
         this.display = display;
         this.window = window;
         this.ghosts = ghosts;
         this.sh = sh;
+        this.stateHandler = stateHandler;
         CellArray = new ArrayList<EnergyCell>();
         window.addKeyListener(this);
         ah = new ActionHandler();
@@ -186,7 +188,7 @@ public class TurnHandler implements KeyListener {
     private void playerTurnOver() {
         if (collisionDedector.detectGhostCollision(player, ghosts)) {
             sh.writeCSV(TurnCount);
-            System.exit(0); //to be replaced with game over screen
+            stateHandler.createMenu();
         } else {
             ah.timePassed = false;
             timer.restart();
@@ -225,7 +227,8 @@ public class TurnHandler implements KeyListener {
     private void enemyTurnOver() {
         if (collisionDedector.detectGhostCollision(player, ghosts)) {
             sh.writeCSV(TurnCount);
-            System.exit(0); //to be replaced with game over screen
+            
+            stateHandler.createMenu();
         }
         TurnCount += 1;
         for (Ghost ghost:ghosts){

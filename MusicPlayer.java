@@ -5,6 +5,7 @@ import java.io.File;
 
 public class MusicPlayer {
     String filePath;
+    Clip clip;
     MusicPlayer(){
         filePath = "spookymusic.wav";
     }
@@ -15,7 +16,7 @@ public class MusicPlayer {
 
             if (musicFile.exists()) {
                 AudioInputStream audioInput = AudioSystem.getAudioInputStream(musicFile);
-                Clip clip = AudioSystem.getClip();
+                clip = AudioSystem.getClip();
                 clip.open(audioInput);
                 clip.start();
                 clip.loop(Clip.LOOP_CONTINUOUSLY);
@@ -25,5 +26,9 @@ public class MusicPlayer {
         } catch(Exception e) {
             System.out.println(e);
         }
+    }
+
+    public void stopMusic(){
+        clip.stop();
     }
 }
