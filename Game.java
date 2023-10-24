@@ -1,11 +1,13 @@
 import javax.swing.*;
 import java.awt.*;
 
+
 public class Game {
     public static final int GHOST_AMOUNT = 2;
     public Player player;
     public Ghost[] ghosts;
     public Grid grid;
+    public DisplayPanel display;
     public Thread gameThread;
 
     void start() {
@@ -18,14 +20,20 @@ public class Game {
             ghosts[i] = ghost;
         }
         grid = new Grid(player, ghosts);
+        ScoreHandler sh = new ScoreHandler();
+        sh.readCSV();
+        display = new DisplayPanel(sh.highScore());
         window.add(grid);
+        window.add(display, BorderLayout.EAST);
         window.pack();
+        MusicPlayer musicPlayer = new MusicPlayer();
+        musicPlayer.playMusic();
         window.setResizable(false);
         window.setLocationRelativeTo(null);
         window.setVisible(true);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         startGameThread();
-        new TurnHandler(player, grid, window, ghosts);
+        new TurnHandler(player, grid, window, ghosts, display, sh);
     }
 
     void startGameThread() {
