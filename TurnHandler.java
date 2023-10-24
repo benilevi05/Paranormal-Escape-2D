@@ -1,5 +1,8 @@
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.security.cert.TrustAnchor;
 import java.util.ArrayList;
 import javax.swing.*;
@@ -19,13 +22,17 @@ public class TurnHandler implements KeyListener {
     int TurnCount = 0;
     ArrayList<EnergyCell> CellArray;
     EnergyCellGenerator Generator;
+    ScoreHandler sh;
+    StateHandler stateHandler;
 
-    public TurnHandler(Player player, Grid grid, JFrame window, Ghost[] ghosts, DisplayPanel display) {
+    public TurnHandler(Player player, Grid grid, JFrame window, Ghost[] ghosts, DisplayPanel display, ScoreHandler sh, StateHandler stateHandler) {
         this.player = player;
         this.grid = grid;
         this.display = display;
         this.window = window;
         this.ghosts = ghosts;
+        this.sh = sh;
+        this.stateHandler = stateHandler;
         CellArray = new ArrayList<EnergyCell>();
         window.addKeyListener(this);
         ah = new ActionHandler();
@@ -180,7 +187,8 @@ public class TurnHandler implements KeyListener {
 
     private void playerTurnOver() {
         if (collisionDedector.detectGhostCollision(player, ghosts)) {
-            System.exit(0); //to be replaced with game over screen
+            sh.writeCSV(TurnCount);
+            stateHandler.createMenu();
         } else {
             ah.timePassed = false;
             timer.restart();
@@ -218,8 +226,9 @@ public class TurnHandler implements KeyListener {
     
     private void enemyTurnOver() {
         if (collisionDedector.detectGhostCollision(player, ghosts)) {
-
-            System.exit(0); //to be replaced with game over screen
+            sh.writeCSV(TurnCount);
+            
+            stateHandler.createMenu();
         }
         TurnCount += 1;
         for (Ghost ghost:ghosts){
