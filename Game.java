@@ -20,6 +20,9 @@ public class Game {
             ghosts[i] = ghost;
         }
         grid = new Grid(player, ghosts);
+        ScoreHandler sh = new ScoreHandler();
+        sh.readCSV();
+        sh.highScore();
         display = new DisplayPanel();
         window.add(grid);
         window.add(display, BorderLayout.EAST);
@@ -31,7 +34,7 @@ public class Game {
         window.setVisible(true);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         startGameThread();
-        new TurnHandler(player, grid, window, ghosts, display);
+        new TurnHandler(player, grid, window, ghosts, display, sh);
     }
 
     void startGameThread() {

@@ -1,5 +1,8 @@
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.security.cert.TrustAnchor;
 import java.util.ArrayList;
 import javax.swing.*;
@@ -19,13 +22,15 @@ public class TurnHandler implements KeyListener {
     int TurnCount = 0;
     ArrayList<EnergyCell> CellArray;
     EnergyCellGenerator Generator;
+    ScoreHandler sh;
 
-    public TurnHandler(Player player, Grid grid, JFrame window, Ghost[] ghosts, DisplayPanel display) {
+    public TurnHandler(Player player, Grid grid, JFrame window, Ghost[] ghosts, DisplayPanel display, ScoreHandler sh) {
         this.player = player;
         this.grid = grid;
         this.display = display;
         this.window = window;
         this.ghosts = ghosts;
+        this.sh = sh;
         CellArray = new ArrayList<EnergyCell>();
         window.addKeyListener(this);
         ah = new ActionHandler();
@@ -180,6 +185,7 @@ public class TurnHandler implements KeyListener {
 
     private void playerTurnOver() {
         if (collisionDedector.detectGhostCollision(player, ghosts)) {
+            sh.writeCSV(TurnCount);
             System.exit(0); //to be replaced with game over screen
         } else {
             ah.timePassed = false;
@@ -218,7 +224,7 @@ public class TurnHandler implements KeyListener {
     
     private void enemyTurnOver() {
         if (collisionDedector.detectGhostCollision(player, ghosts)) {
-
+            sh.writeCSV(TurnCount);
             System.exit(0); //to be replaced with game over screen
         }
         TurnCount += 1;
