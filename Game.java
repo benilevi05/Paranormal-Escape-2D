@@ -9,32 +9,19 @@ public class Game {
     public Grid grid;
     public DisplayPanel display;
     public Thread gameThread;
-
+    JFrame window;
     void start() {
-        JFrame window = new JFrame("Paranormal Escape 2D");
-
-        player = new Player();
-        ghosts = new Ghost[GHOST_AMOUNT];
-        for (int i = 0; i < GHOST_AMOUNT; i++) {
-            Ghost ghost = new Ghost();
-            ghosts[i] = ghost;
-        }
-        grid = new Grid(player, ghosts);
-        ScoreHandler sh = new ScoreHandler();
-        sh.readCSV();
-        display = new DisplayPanel(sh.highScore());
-        window.add(grid);
-        window.add(display, BorderLayout.EAST);
-        window.pack();
-        MusicPlayer musicPlayer = new MusicPlayer();
-        musicPlayer.playMusic();
+        window = new JFrame("Paranormal Escape 2D");
         window.setResizable(false);
         window.setLocationRelativeTo(null);
         window.setVisible(true);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         startGameThread();
-        new TurnHandler(player, grid, window, ghosts, display, sh);
+        StateHandler sh = new StateHandler(window);
+        sh.createMenu();
     }
+
+    
 
     void startGameThread() {
         gameThread = new Thread();
