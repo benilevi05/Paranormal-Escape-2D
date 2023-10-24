@@ -22,8 +22,7 @@ public class Game {
         grid = new Grid(player, ghosts);
         ScoreHandler sh = new ScoreHandler();
         sh.readCSV();
-        sh.highScore();
-        display = new DisplayPanel();
+        display = new DisplayPanel(sh.highScore());
         window.add(grid);
         window.add(display, BorderLayout.EAST);
         window.pack();
