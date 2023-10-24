@@ -1,7 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
 
-
 public class StateHandler {
     JFrame window;
     Menu menu;
@@ -11,12 +10,13 @@ public class StateHandler {
 
     public StateHandler(JFrame window) {
         this.window = window;
-        
-
+        musicPlayer = new MusicPlayer();
     }
-    void gameStart(){
+
+    void gameStart() {
         menu.setVisible(false);
         window.remove(menu);
+        musicPlayer.stopMenuMusic();
 
         Player player = new Player();
         Ghost[] ghosts = new Ghost[Game.GHOST_AMOUNT];
@@ -31,22 +31,22 @@ public class StateHandler {
         window.add(grid);
         window.add(display, BorderLayout.EAST);
         window.pack();
-        musicPlayer = new MusicPlayer();
-        musicPlayer.playMusic();
+        musicPlayer.playGameMusic();
         TurnHandler th = new TurnHandler(player, grid, window, ghosts, display, sh, this);
         grid.requestFocusInWindow();
         grid.addKeyListener(th);
     }
-    public void createMenu(){
+
+    public void createMenu() {
 
         try {
             window.remove(grid);
             window.remove(display);
             grid.setVisible(false);
             display.setVisible(false);
-            musicPlayer.stopMusic();
+            musicPlayer.stopGameMusic();
         } catch (Exception e) {
-            //Ignore
+            // Ignore
         }
 
         menu = new Menu();
@@ -59,7 +59,7 @@ public class StateHandler {
         JPanel startPanel = new JPanel();
         startPanel.add(startButton);
 
-        startButton.addActionListener(e -> { //Lambda function.
+        startButton.addActionListener(e -> { // Lambda function.
             gameStart();
         });
 
@@ -84,8 +84,9 @@ public class StateHandler {
         c.gridy = 2;
         menu.add(exitPanel, c);
 
-
         window.add(menu);
         window.pack();
+
+        musicPlayer.playMenuMusic();
     }
 }

@@ -1,7 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
 
-
 public class Game {
     public static final int GHOST_AMOUNT = 2;
     public Player player;
@@ -10,6 +9,7 @@ public class Game {
     public DisplayPanel display;
     public Thread gameThread;
     JFrame window;
+
     void start() {
         window = new JFrame("Paranormal Escape 2D");
         window.setResizable(false);
@@ -18,10 +18,8 @@ public class Game {
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         startGameThread();
         StateHandler sh = new StateHandler(window);
-        sh.createMenu()
+        sh.createMenu();
     }
-
-    
 
     void startGameThread() {
         gameThread = new Thread();
