@@ -1,9 +1,7 @@
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.Dimension;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SpringLayout.Constraints;
 
 public class DisplayPanel extends JPanel {
     JLabel playerEnergy;
@@ -18,9 +16,9 @@ public class DisplayPanel extends JPanel {
         JLabel playerName = new JLabel("Player");
         playerEnergy = new JLabel("Energy: " + 5);
         JLabel enemyName1 = new JLabel("Ghost");
-        enemyDistance1 = new JLabel("Distance: ");
+        enemyDistance1 = new JLabel("Distance: ?");
         JLabel enemyName2 = new JLabel("Jinn");
-        enemyDistance2 = new JLabel("Distance: ");
+        enemyDistance2 = new JLabel("Distance: ?");
 
         JLabel highScoreLabel = new JLabel("High Score: " + highScore);
 
@@ -45,10 +43,8 @@ public class DisplayPanel extends JPanel {
 
     public void calculateDisplay(Player player, Ghost[] ghosts){
         playerEnergy.setText("Energy: " + player.energy);
-        int dist1 = Math.abs(((player.x - ghosts[0].x) - Grid.TILE_SIZE / 2) / Grid.TILE_SIZE) + 
-        Math.abs(((player.y - ghosts[0].y) - Grid.TILE_SIZE / 2) / Grid.TILE_SIZE);
-        int dist2 = Math.abs(((player.x - ghosts[1].x) - Grid.TILE_SIZE / 2) / Grid.TILE_SIZE) + 
-        Math.abs(((player.y - ghosts[1].y) - Grid.TILE_SIZE / 2) / Grid.TILE_SIZE);
+        int dist1 = Math.abs((player.x - ghosts[0].x) / Grid.TILE_SIZE) + Math.abs((player.y - ghosts[0].y) / Grid.TILE_SIZE);
+        int dist2 = Math.abs((player.x - ghosts[1].x) / Grid.TILE_SIZE) + Math.abs((player.y - ghosts[1].y) / Grid.TILE_SIZE);
 
         enemyDistance1.setText("Distance: " + dist1);
         enemyDistance2.setText("Distance: " + dist2);

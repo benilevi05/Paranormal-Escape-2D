@@ -28,7 +28,6 @@ public class ScoreHandler {
                 highestScore = Integer.valueOf(s);
             }
         }
-        System.out.println("High Score: " + highestScore);
         return highestScore;
     }
 

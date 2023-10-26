@@ -1,27 +1,29 @@
 import javax.swing.*;
 import java.awt.*;
 
-
 public class StateHandler {
     JFrame window;
     Menu menu;
     Grid grid;
     DisplayPanel display;
     MusicPlayer musicPlayer;
+    Ghost[] ghosts;
+    boolean ghostVisibility;
 
     public StateHandler(JFrame window) {
         this.window = window;
-        
-
+        musicPlayer = new MusicPlayer();
     }
-    void gameStart(){
+
+    void gameStart() {
         menu.setVisible(false);
         window.remove(menu);
+        musicPlayer.stopMenuMusic();
 
         Player player = new Player();
-        Ghost[] ghosts = new Ghost[Game.GHOST_AMOUNT];
+        ghosts = new Ghost[Game.GHOST_AMOUNT];
         for (int i = 0; i < Game.GHOST_AMOUNT; i++) {
-            Ghost ghost = new Ghost();
+            Ghost ghost = new Ghost(ghostVisibility);
             ghosts[i] = ghost;
         }
         grid = new Grid(player, ghosts);
@@ -31,22 +33,22 @@ public class StateHandler {
         window.add(grid);
         window.add(display, BorderLayout.EAST);
         window.pack();
-        musicPlayer = new MusicPlayer();
-        musicPlayer.playMusic();
+        musicPlayer.playGameMusic();
         TurnHandler th = new TurnHandler(player, grid, window, ghosts, display, sh, this);
         grid.requestFocusInWindow();
         grid.addKeyListener(th);
     }
-    public void createMenu(){
+
+    public void createMenu() {
 
         try {
             window.remove(grid);
             window.remove(display);
             grid.setVisible(false);
             display.setVisible(false);
-            musicPlayer.stopMusic();
+            musicPlayer.stopGameMusic();
         } catch (Exception e) {
-            //Ignore
+            // Ignore
         }
 
         menu = new Menu();
@@ -56,12 +58,23 @@ public class StateHandler {
         titlePanel.add(titleLabel);
 
         JButton startButton = new JButton("Start");
+        JCheckBox ghostCheckbox = new JCheckBox("Ënemies Visibility");
         JPanel startPanel = new JPanel();
         startPanel.add(startButton);
+        startPanel.add(ghostCheckbox);
 
-        startButton.addActionListener(e -> { //Lambda function.
+        startButton.addActionListener(e -> { // Lambda function.
             gameStart();
         });
+
+        ghostCheckbox.addItemListener(e -> {
+        if (e.getStateChange() == 1){
+            ghostVisibility = true;
+        } else {
+            ghostVisibility = false;
+            }
+        });
+        
 
         JButton exitButton = new JButton("Exit Game");
         JPanel exitPanel = new JPanel();
@@ -73,7 +86,7 @@ public class StateHandler {
 
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.weightx = 0.5;
+        c.weightx = 1;
         c.gridx = 0;
         c.gridy = 0;
         menu.add(titlePanel, c);
@@ -84,8 +97,9 @@ public class StateHandler {
         c.gridy = 2;
         menu.add(exitPanel, c);
 
-
         window.add(menu);
         window.pack();
+
+        musicPlayer.playMenuMusic();
     }
 }

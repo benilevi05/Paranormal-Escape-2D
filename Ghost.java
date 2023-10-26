@@ -9,10 +9,11 @@ public class Ghost extends Movables {
 
     Random random = new Random();
     BufferedImage ghostImage;
+    boolean ghostVisibility;
 
-    public Ghost() {
+    public Ghost(boolean ghostVisibility) {
+        this.ghostVisibility = ghostVisibility;
         spawn();
-
         getGhostImage();
     }   
 
@@ -62,7 +63,7 @@ public class Ghost extends Movables {
         if (energy == 0 && !(Math.abs(player.y - this.y) < Grid.TILE_SIZE * 2)) {
             if (Math.abs(cell.y - this.y) < 3 * Grid.TILE_SIZE  && cell.y > this.y) {
                 moveToY = "+";
-            } else if (Math.abs(cell.y - this.y) < 3 * Grid.TILE_SIZE  && cell.y > this.y) {
+            } else if (Math.abs(cell.y - this.y) < 3 * Grid.TILE_SIZE  && cell.y < this.y) {
                 moveToY = "-";
             }
         }
@@ -172,7 +173,7 @@ public class Ghost extends Movables {
 
     public void getGhostImage(){
         try {
-            ghostImage = ImageIO.read(getClass().getResourceAsStream("Player.png"));
+            ghostImage = ImageIO.read(getClass().getResourceAsStream("ghost.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -181,6 +182,9 @@ public class Ghost extends Movables {
     public void draw(Graphics2D g2) {
         long num = Math.round(Grid.TILE_SIZE * (3.0 / 4.0));
         int num2 = (int) num;
-        g2.drawImage(ghostImage, x - 24, y - 24, num2, num2, null);
+        if (ghostVisibility){
+            g2.drawImage(ghostImage, x - 24, y - 24, num2, num2, null);
+        }
+        
     }
 }
