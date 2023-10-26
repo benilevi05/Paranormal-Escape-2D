@@ -7,6 +7,8 @@ public class StateHandler {
     Grid grid;
     DisplayPanel display;
     MusicPlayer musicPlayer;
+    Ghost[] ghosts;
+    boolean ghostVisibility;
 
     public StateHandler(JFrame window) {
         this.window = window;
@@ -19,9 +21,9 @@ public class StateHandler {
         musicPlayer.stopMenuMusic();
 
         Player player = new Player();
-        Ghost[] ghosts = new Ghost[Game.GHOST_AMOUNT];
+        ghosts = new Ghost[Game.GHOST_AMOUNT];
         for (int i = 0; i < Game.GHOST_AMOUNT; i++) {
-            Ghost ghost = new Ghost();
+            Ghost ghost = new Ghost(ghostVisibility);
             ghosts[i] = ghost;
         }
         grid = new Grid(player, ghosts);
@@ -56,12 +58,23 @@ public class StateHandler {
         titlePanel.add(titleLabel);
 
         JButton startButton = new JButton("Start");
+        JCheckBox ghostCheckbox = new JCheckBox("Ënemies Visibility");
         JPanel startPanel = new JPanel();
         startPanel.add(startButton);
+        startPanel.add(ghostCheckbox);
 
         startButton.addActionListener(e -> { // Lambda function.
             gameStart();
         });
+
+        ghostCheckbox.addItemListener(e -> {
+        if (e.getStateChange() == 1){
+            ghostVisibility = true;
+        } else {
+            ghostVisibility = false;
+            }
+        });
+        
 
         JButton exitButton = new JButton("Exit Game");
         JPanel exitPanel = new JPanel();
@@ -73,7 +86,7 @@ public class StateHandler {
 
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.weightx = 0.5;
+        c.weightx = 1;
         c.gridx = 0;
         c.gridy = 0;
         menu.add(titlePanel, c);

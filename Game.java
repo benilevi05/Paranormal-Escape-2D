@@ -11,14 +11,15 @@ public class Game {
     JFrame window;
 
     void start() {
+        SwingUtilities.invokeLater(() -> {
         window = new JFrame("Paranormal Escape 2D");
         window.setResizable(false);
-        window.setLocationRelativeTo(null);
         window.setVisible(true);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         startGameThread();
         StateHandler sh = new StateHandler(window);
         sh.createMenu();
+        });
     }
 
     void startGameThread() {

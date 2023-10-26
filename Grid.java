@@ -9,7 +9,7 @@ public class Grid extends JPanel {
     final static int ORIGINAL_TILE_SIZE = 16;
     final static int SCALE = 4;
 
-    public static final int TILE_SIZE = ORIGINAL_TILE_SIZE * SCALE; // 48 x 48
+    public static final int TILE_SIZE = ORIGINAL_TILE_SIZE * SCALE; // 64 x 64
     public static final int ROW_AMOUNT = 12;
     public static final int COLUMN_AMOUNT = 12;
     public static final int ROW_SIZE = TILE_SIZE * ROW_AMOUNT;
