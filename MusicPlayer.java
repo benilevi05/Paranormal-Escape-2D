@@ -1,9 +1,8 @@
+import java.io.File;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
-
-import java.io.File;
 
 public class MusicPlayer {
     String gamefilePath;
@@ -24,7 +23,8 @@ public class MusicPlayer {
                 AudioInputStream audioInput = AudioSystem.getAudioInputStream(musicFile);
                 gameClip = AudioSystem.getClip();
                 gameClip.open(audioInput);
-                FloatControl gainControl = (FloatControl) gameClip.getControl(FloatControl.Type.MASTER_GAIN);
+                FloatControl gainControl = (FloatControl) 
+                    gameClip.getControl(FloatControl.Type.MASTER_GAIN);
                 gainControl.setValue(-10.0f);
                 gameClip.start();
                 gameClip.loop(Clip.LOOP_CONTINUOUSLY);
@@ -44,7 +44,8 @@ public class MusicPlayer {
                 AudioInputStream audioInput = AudioSystem.getAudioInputStream(musicFile);
                 menuClip = AudioSystem.getClip();
                 menuClip.open(audioInput);
-                FloatControl gainControl = (FloatControl) menuClip.getControl(FloatControl.Type.MASTER_GAIN);
+                FloatControl gainControl = (FloatControl) 
+                    menuClip.getControl(FloatControl.Type.MASTER_GAIN);
                 gainControl.setValue(-20.0f);
                 menuClip.start();
                 menuClip.loop(Clip.LOOP_CONTINUOUSLY);

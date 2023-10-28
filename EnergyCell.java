@@ -4,24 +4,24 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-public class EnergyCell extends JPanel{
+public class EnergyCell extends JPanel {
     BufferedImage cellImage;
-    public int x,y;
+    public int x;
+    public int y;
     
-    public EnergyCell(int x, int y){
+    public EnergyCell(int x, int y) {
         this.x = x;
         this.y = y;
         getCellImage();
-        System.out.println(x+","+y);
     }
 
-    public void destroy(){
+    public void destroy() {
         this.x = 0;
         this.y = 0;
         this.setVisible(false);
     }
 
-    public void getCellImage(){
+    private void getCellImage() {
         try {
             cellImage = ImageIO.read(getClass().getResourceAsStream("Cell.png"));
         } catch (IOException e) {

@@ -1,16 +1,12 @@
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.security.cert.TrustAnchor;
 import java.util.ArrayList;
 import javax.swing.*;
 
 public class TurnHandler implements KeyListener {
 
-    public boolean pressedUp, pressedDown, pressedRight, pressedLeft, pressedJup, pressedJdown, pressedJright,
-            pressedJleft;
+    public boolean pressedUp, pressedDown, pressedRight, pressedLeft, 
+        pressedJup, pressedJdown, pressedJright, pressedJleft;
     Player player;
     Grid grid;
     DisplayPanel display;
@@ -19,13 +15,14 @@ public class TurnHandler implements KeyListener {
     Timer timer;
     ActionHandler ah;
     CollisionDedector collisionDedector;
-    int TurnCount = 0;
-    ArrayList<EnergyCell> CellArray;
-    EnergyCellGenerator Generator;
+    int turnHandler = 0;
+    ArrayList<EnergyCell> cellArray;
+    EnergyCellGenerator generator;
     ScoreHandler sh;
     StateHandler stateHandler;
 
-    public TurnHandler(Player player, Grid grid, JFrame window, Ghost[] ghosts, DisplayPanel display, ScoreHandler sh, StateHandler stateHandler) {
+    public TurnHandler(Player player, Grid grid, JFrame window, Ghost[] ghosts, 
+        DisplayPanel display, ScoreHandler sh, StateHandler stateHandler) {
         this.player = player;
         this.grid = grid;
         this.display = display;
@@ -33,12 +30,12 @@ public class TurnHandler implements KeyListener {
         this.ghosts = ghosts;
         this.sh = sh;
         this.stateHandler = stateHandler;
-        CellArray = new ArrayList<EnergyCell>();
+        cellArray = new ArrayList<EnergyCell>();
         window.addKeyListener(this);
         ah = new ActionHandler();
         timer = new Timer(1000, ah);
         collisionDedector = new CollisionDedector();
-        Generator = new EnergyCellGenerator();
+        generator = new EnergyCellGenerator();
     }
 
     @Override
@@ -179,22 +176,19 @@ public class TurnHandler implements KeyListener {
     }
 
     private void playerNotMoved() {
-        // Play a error sound
-        System.out.println("cant move");
         ah.timePassed = false;
         timer.restart();
     }
 
     private void playerTurnOver() {
         if (collisionDedector.detectGhostCollision(player, ghosts)) {
-            sh.writeCSV(TurnCount);
+            sh.writeCSV(turnHandler);
             stateHandler.createMenu();
         } else {
             ah.timePassed = false;
             timer.restart();
-            if (collisionDedector.detectEnergyCollision(player, CellArray)){
+            if (collisionDedector.detectEnergyCollision(player, cellArray)) {
                 player.energy += 2;
-                System.out.println(player.energy);
             }
             enemyTurn();
 
@@ -204,55 +198,55 @@ public class TurnHandler implements KeyListener {
 
 
     private void enemyTurn() {
-        for (Ghost ghost:ghosts){
+        for (Ghost ghost:ghosts) {
             EnergyCell closestCell = null;
             int closest = Grid.ROW_SIZE + Grid.COLUMN_SIZE;
-            try{
-            for (int j=0; j < CellArray.size(); j++){
-                EnergyCell cell = CellArray.get(j);
-                if (Math.abs((ghost.x-cell.x) + Math.abs((ghost.y-cell.y))) < closest){
-                    closest = Math.abs(ghost.x-cell.x) + Math.abs((ghost.y-cell.y));
-                    closestCell = cell;
+            try {
+                for (int j = 0; j < cellArray.size(); j++) {
+                    EnergyCell cell = cellArray.get(j);
+                    if (Math.abs((ghost.x - cell.x) + Math.abs((ghost.y - cell.y))) < closest) {
+                        closest = Math.abs(ghost.x - cell.x) + Math.abs((ghost.y - cell.y));
+                        closestCell = cell;
+                    }
                 }
+                ghost.ghostAI(player, closestCell);
+            } catch (Exception e) {
+                ghost.ghostAI(player);
             }
-            ghost.ghostAI(player, closestCell);
-        } catch(Exception e){
-            ghost.ghostAI(player);
-        }
         }
 
-    enemyTurnOver(); 
-}
+        enemyTurnOver(); 
+    }
     
     private void enemyTurnOver() {
         if (collisionDedector.detectGhostCollision(player, ghosts)) {
-            sh.writeCSV(TurnCount);
+            sh.writeCSV(turnHandler);
             
             stateHandler.createMenu();
         }
-        TurnCount += 1;
-        for (Ghost ghost:ghosts){
-            System.out.println((ghost.x-32)/64+","+(ghost.y-32)/64);
-            if (collisionDedector.detectEnergyCollision(ghost, CellArray)) {
+        turnHandler += 1;
+        for (Ghost ghost:ghosts) {
+            if (collisionDedector.detectEnergyCollision(ghost, cellArray)) {
                 ghost.energy += 2;
-                System.out.println("Ghost Energy: " + ghost.energy);
             }
         }
         display.calculateDisplay(player, ghosts);
         display.validate();
-        CellTurn();
+        cellTurn();
 
 
     }
-    private void CellTurn(){
-        if (TurnCount > 3){
-            EnergyCell cell;
-            cell = Generator.Generate();
-         if (cell != null){
-            CellArray.add(cell);
 
-        }}
+    private void cellTurn() {
+        if (turnHandler > 3) {
+            EnergyCell cell;
+            cell = generator.generate();
+            if (cell != null) {
+                cellArray.add(cell);
+
+            } 
+        }
         
-        grid.cellArray = CellArray;
+        grid.cellArray = cellArray;
     }
 }   

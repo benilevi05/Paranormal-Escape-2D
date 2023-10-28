@@ -1,5 +1,5 @@
-import javax.swing.*;
 import java.awt.*;
+import javax.swing.*;
 
 public class StateHandler {
     JFrame window;
@@ -78,10 +78,10 @@ public class StateHandler {
         });
 
         ghostCheckbox.addItemListener(e -> {
-        if (e.getStateChange() == 1){
-            ghostVisibility = true;
-        } else {
-            ghostVisibility = false;
+            if (e.getStateChange() == 1) {
+                ghostVisibility = true;
+            } else {
+                ghostVisibility = false;
             }
         });
         
@@ -140,10 +140,10 @@ public class StateHandler {
         c.gridx = 0;
         c.gridy = 3;
         subMenu.add(controlPanel1, c);
-         c.gridx = 0;
+        c.gridx = 0;
         c.gridy = 4;
         subMenu.add(controlPanel2, c);
-         c.gridx = 0;
+        c.gridx = 0;
         c.gridy = 5;
         subMenu.add(controlPanel3, c);
 

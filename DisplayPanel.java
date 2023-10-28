@@ -4,7 +4,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -14,7 +13,7 @@ public class DisplayPanel extends JPanel {
     JLabel enemyDistance1;
     JLabel enemyDistance2;
 
-    DisplayPanel(int highScore){
+    DisplayPanel(int highScore) {
 
         this.setPreferredSize(new Dimension(Grid.TILE_SIZE * 2, Grid.COLUMN_SIZE));
         this.setBackground(Color.BLACK);
@@ -45,10 +44,12 @@ public class DisplayPanel extends JPanel {
         this.add(highScoreLabel);
     }
 
-    public void calculateDisplay(Player player, Ghost[] ghosts){
+    public void calculateDisplay(Player player, Ghost[] ghosts) {
         playerEnergy.setText("Energy: " + player.energy);
-        int dist1 = Math.abs((player.x - ghosts[0].x) / Grid.TILE_SIZE) + Math.abs((player.y - ghosts[0].y) / Grid.TILE_SIZE);
-        int dist2 = Math.abs((player.x - ghosts[1].x) / Grid.TILE_SIZE) + Math.abs((player.y - ghosts[1].y) / Grid.TILE_SIZE);
+        int dist1 = Math.abs((player.x - ghosts[0].x) / Grid.TILE_SIZE)
+            + Math.abs((player.y - ghosts[0].y) / Grid.TILE_SIZE);
+        int dist2 = Math.abs((player.x - ghosts[1].x) / Grid.TILE_SIZE)
+             + Math.abs((player.y - ghosts[1].y) / Grid.TILE_SIZE);
 
         enemyDistance1.setText("Distance: " + dist1);
         enemyDistance2.setText("Distance: " + dist2);
@@ -60,7 +61,8 @@ public class DisplayPanel extends JPanel {
         Graphics2D g2 = (Graphics2D) g;
         try {
             BufferedImage image = ImageIO.read(getClass().getResourceAsStream("Background.png"));
-            g2.drawImage(image, -768, 0, Grid.COLUMN_SIZE + 2 * Grid.TILE_SIZE, Grid.ROW_SIZE, null);
+            g2.drawImage(image, -768, 0, Grid.COLUMN_SIZE
+                 + 2 * Grid.TILE_SIZE, Grid.ROW_SIZE, null);
         } catch (IOException e) {
             e.printStackTrace();
         }
