@@ -52,10 +52,17 @@ public class StateHandler {
         }
 
         menu = new Menu();
+        menu.setLayout(new BorderLayout());
+
+        JPanel subMenu = new JPanel();
+        subMenu.setLayout(new GridBagLayout());
 
         JPanel titlePanel = new JPanel();
         JLabel titleLabel = new JLabel("Paranormal Escape 2D");
         titlePanel.add(titleLabel);
+        
+        Font titleFont = new Font(Font.SERIF, Font.BOLD, 50);
+        titleLabel.setFont(titleFont);
 
         JButton startButton = new JButton("Start");
         JCheckBox ghostCheckbox = new JCheckBox("Ënemies Visibility");
@@ -84,20 +91,61 @@ public class StateHandler {
             System.exit(0);
         });
 
+        JLabel controlsDesc1 = new JLabel("WASD to move.");
+        JLabel controlsDesc2 = new JLabel("Arrow keys to jump.");
+        JLabel controlsDesc3 = new JLabel("-1 Energy to Jump, Energy Cells give +2 energy.");
+
+        JPanel controlPanel1 = new JPanel();
+        JPanel controlPanel2 = new JPanel();
+        JPanel controlPanel3 = new JPanel();
+
+
+        controlPanel1.add(controlsDesc1);
+        controlPanel2.add(controlsDesc2);
+        controlPanel3.add(controlsDesc3);
+
+        titleLabel.setForeground(Color.WHITE);
+        ghostCheckbox.setForeground(Color.WHITE);
+        controlsDesc1.setForeground(Color.WHITE);
+        controlsDesc2.setForeground(Color.WHITE);
+        controlsDesc3.setForeground(Color.WHITE);
+
+        ghostCheckbox.setBackground(Color.BLACK);
+
+        titlePanel.setBackground(Color.BLACK);
+        startPanel.setBackground(Color.BLACK);
+        exitPanel.setBackground(Color.BLACK);
+        controlPanel1.setBackground(Color.BLACK);
+        controlPanel2.setBackground(Color.BLACK);
+        controlPanel3.setBackground(Color.BLACK);
+
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 1;
+        c.ipady = 200;
         c.gridx = 0;
         c.gridy = 0;
-        menu.add(titlePanel, c);
+        subMenu.add(titlePanel, c);
+        c.ipady = 10;
         c.gridx = 0;
         c.gridy = 1;
-        menu.add(startPanel, c);
+        subMenu.add(startPanel, c);
         c.gridx = 0;
         c.gridy = 2;
-        menu.add(exitPanel, c);
+        subMenu.add(exitPanel, c);
+        c.gridx = 0;
+        c.gridy = 3;
+        subMenu.add(controlPanel1, c);
+         c.gridx = 0;
+        c.gridy = 4;
+        subMenu.add(controlPanel2, c);
+         c.gridx = 0;
+        c.gridy = 5;
+        subMenu.add(controlPanel3, c);
 
-        window.add(menu);
+        menu.add(subMenu, BorderLayout.NORTH);
+        menu.setBackground(Color.BLACK);
+        window.add(menu); 
         window.pack();
 
         musicPlayer.playMenuMusic();
