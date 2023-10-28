@@ -34,7 +34,7 @@ public class Grid extends JPanel {
         Graphics2D g2 = (Graphics2D) g;
         try {
             BufferedImage image = ImageIO.read(getClass().getResourceAsStream("Background.png"));
-            g2.drawImage(image, 0, 0, null);
+            g2.drawImage(image, 0, 0, Grid.COLUMN_SIZE + 2 * Grid.TILE_SIZE, Grid.ROW_SIZE, null);
         } catch (IOException e) {
             e.printStackTrace();
         }

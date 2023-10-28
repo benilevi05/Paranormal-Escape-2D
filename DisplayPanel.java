@@ -1,5 +1,11 @@
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -28,9 +34,7 @@ public class DisplayPanel extends JPanel {
         enemyDistance1.setForeground(Color.WHITE);
         enemyName2.setForeground(Color.WHITE);
         enemyDistance2.setForeground(Color.WHITE);
-      
         highScoreLabel.setForeground(Color.WHITE);
-
 
         this.add(playerName);
         this.add(playerEnergy);
@@ -48,5 +52,17 @@ public class DisplayPanel extends JPanel {
 
         enemyDistance1.setText("Distance: " + dist1);
         enemyDistance2.setText("Distance: " + dist2);
+    }
+
+    @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        Graphics2D g2 = (Graphics2D) g;
+        try {
+            BufferedImage image = ImageIO.read(getClass().getResourceAsStream("Background.png"));
+            g2.drawImage(image, -768, 0, Grid.COLUMN_SIZE + 2 * Grid.TILE_SIZE, Grid.ROW_SIZE, null);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
