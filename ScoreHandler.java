@@ -5,33 +5,33 @@ import java.util.ArrayList;
 
 public class ScoreHandler {
     ArrayList<String> records;
-    public void readCSV(){
+    public void readCSV() {
         records = new ArrayList<String>();
-        try(BufferedReader reader = new BufferedReader(new FileReader("scores.txt"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("scores.txt"))) {
             String current;
-            while((current = reader.readLine()) != null){
+            while ((current = reader.readLine()) != null) {
                 String[] currentArray = current.split(",");
-                for(String c: currentArray) {
+                for (String c: currentArray) {
                     records.add(c);
                 }
             }   
 
-        } catch(Exception e) {
+        } catch (Exception e) {
             System.out.println(e);
         }
     }
 
-    public int highScore(){
+    public int highScore() {
         int highestScore = 0;
-        for(String s: records) {
-            if(Integer.valueOf(s) > highestScore) {
+        for (String s: records) {
+            if (Integer.valueOf(s) > highestScore) {
                 highestScore = Integer.valueOf(s);
             }
         }
         return highestScore;
     }
 
-    public void writeCSV(int lastTurn){
+    public void writeCSV (int lastTurn) {
         try {
             String data = "";
             FileWriter writer = new FileWriter("scores.txt");
@@ -41,7 +41,6 @@ public class ScoreHandler {
                 data += r;
                 data += ",";
             }
-            System.out.println(data);
             writer.write(data);
             writer.close();
             

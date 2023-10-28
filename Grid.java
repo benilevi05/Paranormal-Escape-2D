@@ -1,13 +1,14 @@
-import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
+import javax.imageio.ImageIO;
+import javax.swing.*;
+
 
 public class Grid extends JPanel {
-    final static int ORIGINAL_TILE_SIZE = 16;
-    final static int SCALE = 4;
+    static final int ORIGINAL_TILE_SIZE = 16;
+    static final int SCALE = 4;
 
     public static final int TILE_SIZE = ORIGINAL_TILE_SIZE * SCALE; // 64 x 64
     public static final int ROW_AMOUNT = 12;
@@ -34,7 +35,7 @@ public class Grid extends JPanel {
         Graphics2D g2 = (Graphics2D) g;
         try {
             BufferedImage image = ImageIO.read(getClass().getResourceAsStream("Background.png"));
-            g2.drawImage(image, 0, 0, null);
+            g2.drawImage(image, 0, 0, Grid.COLUMN_SIZE + 2 * Grid.TILE_SIZE, Grid.ROW_SIZE, null);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -49,7 +50,7 @@ public class Grid extends JPanel {
         g2.setColor(Color.PINK);
         player.draw(g2);
         if (cellArray != null) {
-            for (int i = 0; i < cellArray.size(); i++){
+            for (int i = 0; i < cellArray.size(); i++) {
                 EnergyCell cell = cellArray.get(i);
                 cell.draw(g2);
             }

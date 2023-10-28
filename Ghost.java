@@ -2,7 +2,6 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Random;
-
 import javax.imageio.ImageIO;
 
 public class Ghost extends Movables {
@@ -17,7 +16,7 @@ public class Ghost extends Movables {
         getGhostImage();
     }   
 
-    void spawn() {
+    private void spawn() {
         energy = 3;
         int rowPos = random.nextInt(Grid.ROW_AMOUNT);
         int colPos = random.nextInt(Grid.COLUMN_AMOUNT);
@@ -25,18 +24,20 @@ public class Ghost extends Movables {
         x = (rowPos * Grid.TILE_SIZE) + (Grid.TILE_SIZE / 2);
         y = (colPos * Grid.TILE_SIZE) + (Grid.TILE_SIZE / 2);
         if ((Grid.ROW_AMOUNT / 2.0) - 2 < rowPos || rowPos >  (Grid.ROW_AMOUNT / 2.0) + 2
-        && (Grid.COLUMN_AMOUNT / 2.0) - 2 < colPos || colPos >  (Grid.COLUMN_AMOUNT / 2.0) + 2) {
-            System.out.println("X:" + x + "Y:" + y);
+            && (Grid.COLUMN_AMOUNT / 2.0) - 2 < colPos
+             || colPos >  (Grid.COLUMN_AMOUNT / 2.0) + 2) {
+            
         } else {
             spawn();
         }
     }
 
-    public void ghostAI(Player player, EnergyCell cell){
+    public void ghostAI(Player player, EnergyCell cell) {
         String moveToX;
         String moveToY;
         //x movement
-        if (player.x == this.x) { //if the player and ghost is in the same x, it doesnt get a chance to move towards X.
+        if (player.x == this.x) { 
+            //if the player and ghost is in the same x, it doesnt get a chance to move towards X.
             moveToX = "0";
         } else if (player.x > this.x) {
             moveToX = "+";
@@ -45,14 +46,15 @@ public class Ghost extends Movables {
         }  
         
         if (energy == 0 && !(Math.abs(player.x - this.x) < Grid.TILE_SIZE * 2)) {
-            if ( Math.abs(cell.x - this.x) < 3 * Grid.TILE_SIZE  && cell.x > this.x) {
+            if (Math.abs(cell.x - this.x) < 3 * Grid.TILE_SIZE  && cell.x > this.x) {
                 moveToX = "+";
             } else if (Math.abs(cell.x - this.x) < 3 * Grid.TILE_SIZE  && cell.x < this.x) {
                 moveToX = "-";
             }
         }
 
-        if (player.y == this.y) { //if the player and ghost is in the same y, it doesnt get a chance to move towards Y.
+        if (player.y == this.y) { 
+            //if the player and ghost is in the same y, it doesnt get a chance to move towards Y.
             moveToY = "0";
         } else if (player.y > this.y) {
             moveToY = "+";
@@ -70,7 +72,8 @@ public class Ghost extends Movables {
         
         
 
-        if (!(moveToX.equals("0")) && !(moveToY.equals("0"))) { //if both x and y are different, pick random.
+        if (!(moveToX.equals("0")) && !(moveToY.equals("0"))) { 
+            //if both x and y are different, pick random.
             if (random.nextInt(2) == 0) {
                 ghostAIMoveTowardsX(moveToX);
             } else {
@@ -84,7 +87,7 @@ public class Ghost extends Movables {
 
     }
 
-    public void ghostAI(Player player){
+    public void ghostAI(Player player) {
         String moveToX;
         String moveToY;
         //x movement
@@ -123,7 +126,7 @@ public class Ghost extends Movables {
     }
 
 
-    void ghostAIMoveTowardsX(String moveToX){
+    void ghostAIMoveTowardsX(String moveToX) {
         if (energy > 0) {
             if (moveToX.equals("+")) {
                 if (random.nextInt(energy + 1) == 0) {
@@ -147,7 +150,7 @@ public class Ghost extends Movables {
         }
     }
     
-    void ghostAIMoveTowardsY(String moveToY){
+    void ghostAIMoveTowardsY(String moveToY) {
         if (energy > 0) {
             if (moveToY.equals("+")) {
                 if (random.nextInt(energy) == 0) {
@@ -171,7 +174,7 @@ public class Ghost extends Movables {
         }
     }
 
-    public void getGhostImage(){
+    private void getGhostImage() {
         try {
             ghostImage = ImageIO.read(getClass().getResourceAsStream("ghost.png"));
         } catch (IOException e) {
@@ -182,7 +185,7 @@ public class Ghost extends Movables {
     public void draw(Graphics2D g2) {
         long num = Math.round(Grid.TILE_SIZE * (3.0 / 4.0));
         int num2 = (int) num;
-        if (ghostVisibility){
+        if (ghostVisibility) {
             g2.drawImage(ghostImage, x - 24, y - 24, num2, num2, null);
         }
         

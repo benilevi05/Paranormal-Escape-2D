@@ -1,5 +1,5 @@
-import javax.swing.*;
 import java.awt.*;
+import javax.swing.*;
 
 public class StateHandler {
     JFrame window;
@@ -30,8 +30,8 @@ public class StateHandler {
         ScoreHandler sh = new ScoreHandler();
         sh.readCSV();
         display = new DisplayPanel(sh.highScore());
-        window.add(grid);
         window.add(display, BorderLayout.EAST);
+        window.add(grid);
         window.pack();
         musicPlayer.playGameMusic();
         TurnHandler th = new TurnHandler(player, grid, window, ghosts, display, sh, this);
@@ -65,20 +65,23 @@ public class StateHandler {
         titleLabel.setFont(titleFont);
 
         JButton startButton = new JButton("Start");
-        JCheckBox ghostCheckbox = new JCheckBox("Ënemies Visibility");
+        JLabel checkboxDesc = new JLabel("Enemy Visibility");
+        JCheckBox ghostCheckbox = new JCheckBox();
         JPanel startPanel = new JPanel();
+        checkboxDesc.setForeground(Color.WHITE);
         startPanel.add(startButton);
         startPanel.add(ghostCheckbox);
+        startPanel.add(checkboxDesc);
 
         startButton.addActionListener(e -> { // Lambda function.
             gameStart();
         });
 
         ghostCheckbox.addItemListener(e -> {
-        if (e.getStateChange() == 1){
-            ghostVisibility = true;
-        } else {
-            ghostVisibility = false;
+            if (e.getStateChange() == 1) {
+                ghostVisibility = true;
+            } else {
+                ghostVisibility = false;
             }
         });
         
@@ -110,14 +113,15 @@ public class StateHandler {
         controlsDesc2.setForeground(Color.WHITE);
         controlsDesc3.setForeground(Color.WHITE);
 
-        ghostCheckbox.setBackground(Color.BLACK);
+        titlePanel.setBackground(new Color(0, 0, 0, 0));
+        startPanel.setBackground(new Color(0, 0, 0, 0));
+        exitPanel.setBackground(new Color(0, 0, 0, 0));
+        controlPanel1.setBackground(new Color(0, 0, 0, 0));
+        controlPanel2.setBackground(new Color(0, 0, 0, 0));
+        controlPanel3.setBackground(new Color(0, 0, 0, 0));
+        ghostCheckbox.setBackground(new Color(0, 0, 0, 0));
 
-        titlePanel.setBackground(Color.BLACK);
-        startPanel.setBackground(Color.BLACK);
-        exitPanel.setBackground(Color.BLACK);
-        controlPanel1.setBackground(Color.BLACK);
-        controlPanel2.setBackground(Color.BLACK);
-        controlPanel3.setBackground(Color.BLACK);
+        subMenu.setBackground(new Color(0, 0, 0, 0));
 
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.HORIZONTAL;
@@ -136,10 +140,10 @@ public class StateHandler {
         c.gridx = 0;
         c.gridy = 3;
         subMenu.add(controlPanel1, c);
-         c.gridx = 0;
+        c.gridx = 0;
         c.gridy = 4;
         subMenu.add(controlPanel2, c);
-         c.gridx = 0;
+        c.gridx = 0;
         c.gridy = 5;
         subMenu.add(controlPanel3, c);
 
