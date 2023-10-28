@@ -77,11 +77,11 @@ public class StateHandler {
             gameStart();
         });
 
+        ghostVisibility = false;
+
         ghostCheckbox.addItemListener(e -> {
             if (e.getStateChange() == 1) {
                 ghostVisibility = true;
-            } else {
-                ghostVisibility = false;
             }
         });
         
