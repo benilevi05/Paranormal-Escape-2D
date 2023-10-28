@@ -11,8 +11,8 @@ public class MusicPlayer {
     Clip menuClip;
 
     MusicPlayer() {
-        gamefilePath = "spookymusic.wav";
-        menufilePath = "bonetrousle.wav";
+        gamefilePath = "res/spookymusic.wav";
+        menufilePath = "res/bonetrousle.wav";
     }
 
     public void playGameMusic() {
@@ -58,10 +58,19 @@ public class MusicPlayer {
     }
 
     public void stopGameMusic() {
-        gameClip.stop();
+        try {
+            gameClip.stop();
+        } catch(Exception e) {
+            System.out.println(e);
+        }
+        
     }
 
     public void stopMenuMusic() {
-        menuClip.stop();
+        try {
+            menuClip.stop();
+        } catch(Exception e) {
+            System.out.println(e);
+        }
     }
 }

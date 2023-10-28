@@ -7,7 +7,7 @@ public class ScoreHandler {
     ArrayList<String> records;
     public void readCSV() {
         records = new ArrayList<String>();
-        try (BufferedReader reader = new BufferedReader(new FileReader("scores.txt"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("src/scores.txt"))) {
             String current;
             while ((current = reader.readLine()) != null) {
                 String[] currentArray = current.split(",");
@@ -34,7 +34,7 @@ public class ScoreHandler {
     public void writeCSV (int lastTurn) {
         try {
             String data = "";
-            FileWriter writer = new FileWriter("scores.txt");
+            FileWriter writer = new FileWriter("src/scores.txt");
             records.add(String.valueOf(lastTurn));
 
             for (String r: records) {
