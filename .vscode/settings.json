@@ -1,3 +1,6 @@
 {
-    "java.checkstyle.version": "10.12.4"
+    "java.checkstyle.version": "10.12.4",
+    "java.project.sourcePaths": [
+        "."
+    ]
 }

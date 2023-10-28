@@ -1,11 +1,15 @@
 import javax.swing.*;
 
+/**
+ * This class is our main class which creates the games's frame.
+ * After that it calls the State Handler class and starts the program.
+ * @author Beni Levi
+ * @author Kayra Calgara
+ * 
+ */
+
 public class Game {
     public static final int GHOST_AMOUNT = 2;
-    public Player player;
-    public Ghost[] ghosts;
-    public Grid grid;
-    public DisplayPanel display;
     public Thread gameThread;
     JFrame window;
 
